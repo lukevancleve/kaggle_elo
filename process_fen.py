@@ -20,8 +20,9 @@ for j  in range(1,10000):
     while node.variations:
         next_node = node.variation(0)
         fen = node.board().fen()
-        cmd = "./eval_position.sh " + fen + " | ~/stockfish-6-linux/src/stockfish | python extract_moves.py > ./final/game_"+str(j) + "/" + str(i)
-        print(cmd)
-        subprocess.call(cmd, shell=True )
+        if not(os.path.isfile("./final/game_"+str(j)+"/"+str(i))):
+            cmd = "./eval_position.sh " + fen + " | ~/stockfish-6-linux/src/stockfish | python extract_moves.py > ./final/game_"+str(j) + "/" + str(i)
+            print(cmd)
+            subprocess.call(cmd, shell=True )
         node = next_node
         i = i + 1
